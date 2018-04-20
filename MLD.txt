@@ -1,0 +1,11 @@
+Formulaire (#ID: int, nom: Varchar, date_creation: Date, date_suppression: Date)
+Champ (#form=>Formulaire,#ID: int , type: varchar, actif: boolean, obligatoire: boolean, version: numeric,
+date_creation: Date, date_suppression:Date)
+Label (#ID: int, #champ=>Champ, valeur: varchar, Langue: varchar)
+Utilisateur(#login: varchar, mdp: varchar, type: varchar) type in
+{Organisation, Individu, Application}
+Privilege(#login=>utilisateur, #form=>Formulaire, code: varchar)
+Reponse(#ID: int, user=>utilisateur, date: Date)
+Donnees(rep=>Reponse,champ=>Champ, contenu: varchar, langue: varchar)
+Modification(#ID: int, date: Date, valeur_type: String, valeur_actif: Boolean,
+valeur_obligatoire: Boolean)
