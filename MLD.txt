@@ -1,11 +1,17 @@
-Formulaire (#ID: int, nom: Varchar, date_creation: Date, date_suppression: Date)
+Formulaire (#ID: int,admin=>Utilisateur, nom: Varchar, date_creation: Date, date_suppression: Date)
+avec admin NOT NULL
 Champ (#form=>Formulaire,#ID: int , type: varchar, actif: boolean, obligatoire: boolean, version: numeric,
 date_creation: Date, date_suppression:Date)
-Label (#ID: int, #champ=>Champ, valeur: varchar, Langue: varchar)
-Utilisateur(#login: varchar, mdp: varchar, type: varchar) type in
+Label (#ID: int, champ=>Champ, valeur: varchar, Langue: varchar) avec champ NOT NULL
+Utilisateur(#login: varchar, mdp: varchar, type: varchar) avec type IN
 {Organisation, Individu, Application}
-Privilege(#login=>utilisateur, #form=>Formulaire, code: varchar)
-Reponse(#ID: int, user=>utilisateur, date: Date)
-Donnees(rep=>Reponse,champ=>Champ, contenu: varchar, langue: varchar)
-Modification(#ID: int, date: Date, valeur_type: String, valeur_actif: Boolean,
-valeur_obligatoire: Boolean)
+Privilege(#login=>utilisateur, #form=>Formulaire, code: varchar) avec 
+PROJECTION(Utilisateur, login) = PROJECTION(Privilege,login) AND
+PROJECTION(Formulaire, ID) = PROJECTION(Privilege,form)
+Reponse(#ID: int, user=>utilisateur, date: Date) avec user NOT NULL et 
+PROJECTION(Reponse, user) = PROJECTION(utilisateur, login)
+Donnees(#rep=>Reponse, champ=>Champ, #ID: int, contenu: varchar, langue: varchar) 
+avec champ NOT NULL
+Modification(#ID: int, #login=> Utilisateur, #champ=>Champ, date: Date, valeur_type: String, valeur_actif: Boolean,
+valeur_obligatoire: Boolean) avec PROJECTION(Modification, login) = PROJECTION(Utilisateur, login)
+
