@@ -1,9 +1,9 @@
 Formulaire (#ID: int,admin=>Utilisateur, nom: Varchar, date_creation: Date, date_suppression: Date)
-avec admin NOT NULL
+avec admin NOT NULL, date_creation < date_suppression
 Champ (#form=>Formulaire,#ID: int , type: varchar, actif: boolean, obligatoire: boolean, version: numeric,
-date_creation: Date, date_suppression:Date)
+date_creation: Date, date_suppression:Date) avec date_creation < date_suppression
 Label (#ID: int, champ=>Champ, valeur: varchar, Langue: varchar) avec champ NOT NULL
-Utilisateur(#login: varchar, mdp: varchar, type: varchar) avec type IN
+Utilisateurs(#login: varchar, mdp: varchar, type: varchar) avec type IN
 {Organisation, Individu, Application}
 Privilege(#login=>utilisateur, #form=>Formulaire, code: varchar) avec 
 PROJECTION(Utilisateur, login) = PROJECTION(Privilege,login) AND

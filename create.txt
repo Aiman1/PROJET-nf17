@@ -1,0 +1,74 @@
+CREATE TYPE UserType AS ENUM ('Organisation', 'Individu', 'Application');
+
+CREATE TABLE Utilisateurs (
+login VARCHAR(30) PRIMARY KEY,
+mdp VARCHAR(50),
+type UserType
+);
+
+
+CREATE TABLE Formulaire (
+ID INTEGER PRIMARY KEY,
+login VARCHAR(30) REFERENCES Utilisateurs(login),
+nom VARCHAR(30),
+date_creation DATE,
+date_suppression DATE,
+CHECK (date_creation < date_suppression)
+);
+
+CREATE TABLE Champ (
+form INTEGER REFERENCES Formulaire(ID),
+ID INTEGER UNIQUE ,
+type varchar(30),
+actif boolean,
+obligatoire boolean,
+version numeric,
+date_creation Date,
+date_suppression Date,
+PRIMARY KEY ( form, ID),
+CHECK (date_creation < date_suppression)
+);
+
+
+CREATE TABLE Label (
+ID integer PRIMARY KEY,
+champ INTEGER NOT NULL REFERENCES Champ(ID),
+valeur varchar(30),
+langue varchar(30)
+);
+
+CREATE TABLE Privilege (
+login VARCHAR(30) REFERENCES Utilisateurs(login),
+form INTEGER REFERENCES Formulaire(ID),
+code varchar(4),
+PRIMARY KEY(login, form)
+);
+
+CREATE TABLE Reponse (
+ID integer PRIMARY KEY,
+login VARCHAR(30) NOT NULL REFERENCES Utilisateurs(login),
+date Date
+);
+
+
+CREATE TABLE Donnees (
+rep INTEGER REFERENCES Reponse(ID),
+champ INTEGER NOT NULL REFERENCES Champ(ID),
+ID INTEGER, 
+contenu varchar(200),
+langue varchar(30),
+PRIMARY KEY(rep, ID)
+);
+
+
+CREATE TABLE Modification (
+ID integer, 
+login VARCHAR(30) REFERENCES Utilisateurs(login),
+champ INTEGER REFERENCES Champ(ID),
+date Date,
+valeur_type VARCHAR(30),
+valeur_actif Boolean,
+valeur_obligatoire Boolean,
+PRIMARY KEY(ID, login, champ)
+);
+ 
