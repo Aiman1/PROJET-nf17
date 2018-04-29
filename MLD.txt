@@ -21,9 +21,10 @@ PROJECTION(Label, champ, champ_form) IN PROJECTION(Champ, id, form)
 Utilisateurs(#login: varchar, mdp: varchar, type: varchar) avec type IN
 {Organisation, Individu, Application}
 
-Privilege(#login=>Utilisateur(login), #form=>Formulaire(id), code: varchar) avec 
+Privilege(#login=>Utilisateur(login), #form=>Formulaire(id), #code: varchar) avec 
 PROJECTION(Privilege,login) IN PROJECTION(Utilisateur, login) AND
-PROJECTION(Privilege,form)  = PROJECTION(Formulaire, id)
+PROJECTION(Privilege,form)  = PROJECTION(Formulaire, id) AND
+code IN ('creationform','suppressionform', 'ajout', 'edition', 'suppression', 'activation')
 
 Reponse(#id: int, user=>utilisateur(login), date: Date) avec user NOT NULL et 
 PROJECTION(Reponse, user) IN PROJECTION(utilisateur, login)
