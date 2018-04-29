@@ -1,4 +1,4 @@
-Formulaire (#id: int, createur=>Utilisateur(id), destructeur=>Utilisateur(id), nom: Varchar, date_creation: Date, date_suppression: Date)
+Formulaire (#id: int, createur=>Utilisateur(login), destructeur=>Utilisateur(login), nom: Varchar, date_creation: Date, date_suppression: Date)
 avec createur NOT NULL AND
 Si date_creation NOT NULL et date_suppression NOT NULL Alors date_creation < date_suppression AND
 PROJECTION(Formulaire, createur) IN PROJECTION(Utilisateur, login) AND
