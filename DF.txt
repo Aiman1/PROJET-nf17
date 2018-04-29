@@ -3,7 +3,10 @@ Formulaire (#id: int, createur=>Utilisateur(id), destructeur=>Utilisateur(id), n
 	ID → nom
 	ID → date_creation
 	ID → date_suppression
+<<<<<<< HEAD
+=======
 	?(createur,nom,date_creation) → ID?
+>>>>>>> 1c60cc964bdc932f6d47a5507f728712758cc680
 
 Champ (#form=>Formulaire,#id: int , type: varchar, actif: boolean, obligatoire: boolean, version: numeric, date_creation: Date, date_suppression:Date, createur=>Utilisateur(login), destructeur=>Utilisateur(login))
 	form,id → type
