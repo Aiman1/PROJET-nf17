@@ -1,8 +1,8 @@
-Formulaire (#id: int, createur=>Utilisateur(id), destructeur=>Utilisateur(id), nom: Varchar, date_creation: Date, date_suppression: Date)
-	ID → createur
-	ID → nom
-	ID → date_creation
-	ID → date_suppression
+Formulaire (#login: int, createur=>Utilisateur(login), destructeur=>Utilisateur(login), nom: Varchar, date_creation: Date, date_suppression: Date)
+	login → createur
+	login → nom
+	login → date_creation
+	login → date_suppression
 <<<<<<< HEAD
 =======
 	?(createur,nom,date_creation) → ID?
@@ -27,7 +27,7 @@ Utilisateurs(#login: varchar, mdp: varchar, type: varchar)
 	login → mdp
 	login → type
 	
-Privilege(#login=>Utilisateur(login), #form=>Formulaire(id), #code: varchar)
+Privilege(#login=>Utilisateur(login), #form=>Formulaire(login), #code: varchar)
 	login,form,code → login,form,code
 	
 Reponse(#id: int, user=>utilisateur(login), date: Date)
