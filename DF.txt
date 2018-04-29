@@ -1,7 +1,7 @@
-Formulaire (#id: int, createur=>Utilisateur(id), destructeur=>Utilisateur(id), nom: Varchar, date_creation: Date, date_suppression: Date)
-	ID → createur, destructeur, nom, date_creation, date_suppression
+Formulaire (#id: int, createur=>Utilisateurs(login), destructeur=>Utilisateurs(login), nom: Varchar, date_creation: Date, date_suppression: Date)
+	id → createur, destructeur, nom, date_creation, date_suppression
 
-Champ (#form=>Formulaire,#id: int , type: varchar, actif: boolean, obligatoire: boolean, version: numeric, date_creation: Date, date_suppression:Date, createur=>Utilisateur(login), destructeur=>Utilisateur(login))
+Champ (#form=>Formulaire,#id: int , type: varchar, actif: boolean, obligatoire: boolean, version: numeric, date_creation: Date, date_suppression:Date, createur=>Utilisateurs(login), destructeur=>Utilisateurs(login))
 	form,id → type, actif, obligatoire, version, date_creation, date_suppression, createur, destructeur
 	
 Label (#id: int, champ=>Champ(id), champ_form=>Champ(form), valeur: varchar, Langue: varchar)
@@ -10,14 +10,16 @@ Label (#id: int, champ=>Champ(id), champ_form=>Champ(form), valeur: varchar, Lan
 Utilisateurs(#login: varchar, mdp: varchar, type: varchar)
 	login → mdp, type
 	
-Privilege(#login=>Utilisateur(login), #form=>Formulaire(id), #code: varchar)
+
+Privilege(#login=>Utilisateurs(login), #form=>Formulaire(id), #code: varchar)
+	login,form,code → login,form,code
 	
-Reponse(#id: int, user=>utilisateur(login), date: Date)
+Reponse(#id: int, user=>Utilisateurs(login), date: Date)
 	id → user, date
 	
 Donnees(#rep=>Reponse(id), #id: int, champ=>Champ(id), champ_form=>Champ(form), contenu: varchar, langue: varchar) 
 	rep,id → champ, champ_form, contenu, langue
 	
-Modification(#login=> Utilisateur(login), #champ=>Champ(id), #champ_form=>Champ(form), #date: Date, valeur_type: String, valeur_actif: Boolean, valeur_obligatoire: Boolean)
+Modification(#login=> Utilisateurs(login), #champ=>Champ(id), #champ_form=>Champ(form), #date: Date, valeur_type: String, valeur_actif: Boolean, valeur_obligatoire: Boolean)
 	login,champ,champ_form,date → valeur_type, valeur_actif, valeur_obligatoire
 
