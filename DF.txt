@@ -27,8 +27,8 @@ Utilisateurs(#login: varchar, mdp: varchar, type: varchar)
 	login → mdp
 	login → type
 	
-Privilege(#login=>Utilisateur(login), #form=>Formulaire(id), code: varchar)
-	login,form → code
+Privilege(#login=>Utilisateur(login), #form=>Formulaire(id), #code: varchar)
+	login,form,code → login,form,code
 	
 Reponse(#id: int, user=>utilisateur(login), date: Date)
 	id → user
