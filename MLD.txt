@@ -4,32 +4,27 @@ Si date_creation NOT NULL et date_suppression NOT NULL Alors date_creation < dat
 PROJECTION(Formulaire, createur) IN PROJECTION(Utilisateur, login) AND
 PROJECTION(Formulaire, destructeur) IN PROJECTION(Utilisateur, login) AND
 date_suppression NOT NULL Si et Seulement Si destructeur NOT NULL
-	
-	ID→createur, nom, date_creation, date_suppression
-	(createur,nom,date_creation)→ID
 
-Champ (#form=>Formulaire,#id: int , type: varchar, actif: boolean, obligatoire: boolean, version: numeric, date_creation: Date, date_suppression:Date, createur=>Utilisateur(login), destructeur=>Utilisateur(login))
+Champ (#form=>Formulaire,#id: int , type: varchar, actif: boolean, obligatoire: boolean, version: numeric,
+date_creation: Date, date_suppression:Date, createur=>Utilisateur(login), destructeur=>Utilisateur(login))
 avec date_creation NOT NULL AND createur NOT NULL AND
 Si date_creation NOT NULL et date_suppression NOT NULL Alors date_creation < date_suppression AND
 PROJECTION(Champ, createur) IN PROJECTION(Utilisateur, login) AND
 PROJECTION(Champ, destructeur) IN PROJECTION(Utilisateur, login) AND
 date_suppression NOT NULL Si et Seulement Si destructeur NOT NULL AND
 PROJECTION(Champ, form) = PROJECTION(Formulaire, id)
-	
-	(form,id)type, actif, obligatoire, version, date_creation, date_suppression, createur, destructeur
 
-	
-	
-Label (#id: int, champ=>Champ(id), champ_form=>Champ(form), valeur: varchar, Langue: varchar)
+Label (#id: int, champ=>Champ(id), champ_form=>Champ(form) valeur: varchar, Langue: varchar)
 avec champ NOT NULL AND champ_form NOT NULL AND
 PROJECTION(Label, champ, champ_form) IN PROJECTION(Champ, id, form)
 
 Utilisateurs(#login: varchar, mdp: varchar, type: varchar) avec type IN
 {Organisation, Individu, Application}
 
-Privilege(#login=>Utilisateur(login), #form=>Formulaire(id), code: varchar) avec 
+Privilege(#login=>Utilisateur(login), #form=>Formulaire(id), #code: varchar) avec 
 PROJECTION(Privilege,login) IN PROJECTION(Utilisateur, login) AND
-PROJECTION(Privilege,form)  = PROJECTION(Formulaire, id)
+PROJECTION(Privilege,form)  = PROJECTION(Formulaire, id) AND
+code IN ('creationform','suppressionform', 'ajout', 'edition', 'suppression', 'activation')
 
 Reponse(#id: int, user=>utilisateur(login), date: Date) avec user NOT NULL et 
 PROJECTION(Reponse, user) IN PROJECTION(utilisateur, login)
