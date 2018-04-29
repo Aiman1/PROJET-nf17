@@ -1,0 +1,42 @@
+Formulaire (#id: int, createur=>Utilisateur(id), destructeur=>Utilisateur(id), nom: Varchar, date_creation: Date, date_suppression: Date)
+	ID → createur
+	ID → nom
+	ID → date_creation
+	ID → date_suppression
+
+Champ (#form=>Formulaire,#id: int , type: varchar, actif: boolean, obligatoire: boolean, version: numeric, date_creation: Date, date_suppression:Date, createur=>Utilisateur(login), destructeur=>Utilisateur(login))
+	form,id → type
+	form,id → actif
+	form,id → obligatoire
+	form,id → version
+	form,id → date_creation
+	form,id → date_suppression
+	form,id → createur
+	
+Label (#id: int, champ=>Champ(id), champ_form=>Champ(form), valeur: varchar, Langue: varchar)
+	id → champ
+	id → champ_form
+	id → valeur
+	id → Langue
+	
+Utilisateurs(#login: varchar, mdp: varchar, type: varchar)
+	login → mdp
+	login → type
+	
+Privilege(#login=>Utilisateur(login), #form=>Formulaire(id), code: varchar)
+	login,form → code
+	
+Reponse(#id: int, user=>utilisateur(login), date: Date)
+	id → user
+	id → date
+	
+Donnees(#rep=>Reponse(id), #id: int, champ=>Champ(id), champ_form=>Champ(form), contenu: varchar, langue: varchar) 
+	rep,id → champ
+	rep,id → champ_form
+	rep,id → contenu
+	rep,id → clangue
+	
+Modification(#login=> Utilisateur(login), #champ=>Champ(id), #champ_form=>Champ(form), #date: Date, valeur_type: String, valeur_actif: Boolean, valeur_obligatoire: Boolean)
+	login,champ,champ_form,date → valeur_type
+	login,champ,champ_form,date → valeur_actif
+	login,champ,champ_form,date → valeur_obligatoire
