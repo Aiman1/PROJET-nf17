@@ -1,16 +1,16 @@
-Formulaire (#id: int, createur=>Utilisateur(id), destructeur=>Utilisateur(id), nom: Varchar, date_creation: Date, date_suppression: Date)
+Formulaire (#id: int, createur=>Utilisateurs(login), destructeur=>Utilisateurs(login), nom: Varchar, date_creation: Date, date_suppression: Date)
 avec createur NOT NULL AND
 Si date_creation NOT NULL et date_suppression NOT NULL Alors date_creation < date_suppression AND
-PROJECTION(Formulaire, createur) IN PROJECTION(Utilisateur, login) AND
-PROJECTION(Formulaire, destructeur) IN PROJECTION(Utilisateur, login) AND
+PROJECTION(Formulaire, createur) IN PROJECTION(Utilisateurs, login) AND
+PROJECTION(Formulaire, destructeur) IN PROJECTION(Utilisateurs, login) AND
 date_suppression NOT NULL Si et Seulement Si destructeur NOT NULL
 
-Champ (#form=>Formulaire,#id: int , type: varchar, actif: boolean, obligatoire: boolean, version: numeric,
+Champ (#form=>Formulaire(id),#id: int , type: varchar, actif: boolean, obligatoire: boolean, version: numeric,
 date_creation: Date, date_suppression:Date, createur=>Utilisateur(login), destructeur=>Utilisateur(login))
 avec date_creation NOT NULL AND createur NOT NULL AND
 Si date_creation NOT NULL et date_suppression NOT NULL Alors date_creation < date_suppression AND
-PROJECTION(Champ, createur) IN PROJECTION(Utilisateur, login) AND
-PROJECTION(Champ, destructeur) IN PROJECTION(Utilisateur, login) AND
+PROJECTION(Champ, createur) IN PROJECTION(Utilisateurs, login) AND
+PROJECTION(Champ, destructeur) IN PROJECTION(Utilisateurs, login) AND
 date_suppression NOT NULL Si et Seulement Si destructeur NOT NULL AND
 PROJECTION(Champ, form) = PROJECTION(Formulaire, id)
 
@@ -21,20 +21,21 @@ PROJECTION(Label, champ, champ_form) IN PROJECTION(Champ, id, form)
 Utilisateurs(#login: varchar, mdp: varchar, type: varchar) avec type IN
 {Organisation, Individu, Application}
 
-Privilege(#login=>Utilisateur(login), #form=>Formulaire(id), #code: varchar) avec 
-PROJECTION(Privilege,login) IN PROJECTION(Utilisateur, login) AND
+Privilege(#login=>Utilisateurs(login), #form=>Formulaire(id), #code: varchar) avec 
+PROJECTION(Privilege,login) IN PROJECTION(Utilisateurs, login) AND
 PROJECTION(Privilege,form)  = PROJECTION(Formulaire, id) AND
 code IN ('creationform','suppressionform', 'ajout', 'edition', 'suppression', 'activation')
 
-Reponse(#id: int, user=>utilisateur(login), date: Date) avec user NOT NULL et 
-PROJECTION(Reponse, user) IN PROJECTION(utilisateur, login)
+Reponse(#id: int, utilisateur=>utilisateurs(login), date: Date)
+avec utilisateur NOT NULL et 
+PROJECTION(Reponse, utilisateur) IN PROJECTION(utilisateurs, login)
 
 Donnees(#rep=>Reponse(id), #id: int, champ=>Champ(id), champ_form=>Champ(form), contenu: varchar, langue: varchar) 
 avec champ NOT NULL AND champ_form NOT NULL
 PROJECTION(Reponse, id) = PROJECTION(Donnees, rep) AND
 PROJECTION(Donnees, champ, champ_form) IN PROJECTION(Champ, id, form)
 
-Modification(#login=> Utilisateur(login), #champ=>Champ(id), #champ_form=>Champ(form), #date: Date, valeur_type: String, valeur_actif: Boolean, valeur_obligatoire: Boolean) 
-avec PROJECTION(Modification, login) IN PROJECTION(Utilisateur, login) AND
+Modification(#login=> Utilisateurs(login), #champ=>Champ(id), #champ_form=>Champ(form), #date_modif: Date, valeur_type: String, valeur_actif: Boolean, valeur_obligatoire: Boolean) 
+avec PROJECTION(Modification, login) IN PROJECTION(Utilisateurs, login) AND
 PROJECTION(Modification, champ, champ_form) IN PROJECTION(Champ, id, form)
 
