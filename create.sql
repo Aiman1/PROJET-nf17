@@ -1,5 +1,5 @@
 -- TABLE Utilisateurs
-CREATE TYPE UserType AS ENUM ('organisation', 'individu', 'application');
+CREATE TYPE UserType AS ENUM ('Organisation', 'Individu', 'Application');
 
 CREATE TABLE Utilisateurs (
 	login VARCHAR(30) PRIMARY KEY,
