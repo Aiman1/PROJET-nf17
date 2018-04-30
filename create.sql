@@ -20,9 +20,10 @@ CREATE TABLE Formulaire (
 CREATE OR REPLACE FUNCTION form_trig_date() RETURNS TRIGGER AS
 '
 BEGIN
-	IF date_creation > date_suppression THEN
+	IF NEW.date_creation > NEW.date_suppression THEN
 		RETURN NULL;
 	END IF;
+	RETURN NEW;
 END;
 '
 LANGUAGE 'plpgsql';
